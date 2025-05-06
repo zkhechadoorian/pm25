@@ -19,14 +19,18 @@ def prepare_regression_data(df, target_col, categorical_cols):
     - X: The independent variables with dummy variables for categorical columns.
     - y: The target variable as a numeric column.
     """
-    # Convert categorical columns into dummy variables (one-hot encoding)
+    # One-hot encode categorical variables (and ensure dtype is float)
     X = pd.get_dummies(df[categorical_cols], drop_first=True).astype(float)
-    
-    # The target variable (y)
+    # Define target variable
     y = df[target_col].astype(float)
-    
-    # Add a constant column for the intercept in the regression model
-    return sm.add_constant(X), y
+    # Add constant to the predictors
+    X  = sm.add_constant(X)
+    # Fit the linear regression model
+    model_armenia = sm.OLS(y, X).fit()
+    # Extract fitted values (predicted y)
+    fitted_vals_armenia = model_armenia.fittedvalues
+
+    return X, y
 
 def fit_ols_model(X, y):
     """
@@ -65,6 +69,19 @@ def get_regression_diagnostics(model):
         'rsquared_adj': model.rsquared_adj,   # Adjusted R-squared
         'aic': model.aic                      # AIC (model quality indicator)
     }
+
+def get_R_squared(model):
+    """
+    Extract the R-squared value from the fitted OLS model.
+    
+    Parameters:
+    - model: The fitted OLS regression model.
+    
+    Returns:
+    - R-squared value.
+    """
+    return model.rsquared
+
 
 def detect_residual_outliers(residuals):
     """

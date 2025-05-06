@@ -21,7 +21,11 @@ from scripts.visualizations import (
 # ======================== Page Configuration ========================
 st.set_page_config(layout="wide")
 st.title("📈 PM2.5 Regression Analysis")
-st.markdown("Explore relationships between PM2.5 levels and geographic factors")
+st.markdown("Explore relationships between PM2.5 levels and geographic factors.")
+st.markdown("A linear regression model was fitted to analyze the impact of various factors on PM2.5 levels.")
+st.markdown("The model I fit was based on the following features: `Dim1` (settlement type) and `Location` (country). The target variable is `FactValueNumeric` (PM2.5 levels).")
+st.markdown("The model summary and diagnostic plots are displayed below, along with an analysis of potential outliers in the residuals.")
+st.markdown("This model performed much better than a model using `Dim1` and `ParentLocation` (region) as categorical variables")
 
 # ======================== Load Cleaned Data ========================
 df = load_data()
@@ -31,9 +35,12 @@ st.sidebar.header("Model Settings")
 
 # Define target variable and categorical features
 target_col = 'FactValueNumeric'
-categorical_cols = ['Dim1', 'ParentLocation']
+categorical_cols = ['Dim1', 'Location']
 
 # ======================== Fit Regression Model ========================
+# taken from notebooks/Regression_Analysis.ipynb
+
+# Preprocess the Armenian data
 # Preprocess the data (dummy encoding, etc.)
 X, y = prepare_regression_data(df, target_col, categorical_cols)
 
@@ -50,15 +57,19 @@ tab1, tab2, tab3 = st.tabs(["Model Summary", "Diagnostic Plots", "Residual Analy
 with tab1:
     st.header("Regression Model Summary")
 
+    R_squared = model.rsquared
+    R_squared_adj = model.rsquared_adj
+    AIC = model.aic
+
     # ---- Display key performance metrics ----
     st.subheader("Model Performance")
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.metric("R-squared", "0.301", "Explained variance")
+        st.metric("R-squared", f"{R_squared:3f}", "Explained variance")
     with col2:
-        st.metric("Adjusted R-squared", "0.301", "Adjusted for predictors")
+        st.metric("Adjusted R-squared", f"{R_squared_adj:3f}", "Adjusted for predictors")
     with col3:
-        st.metric("AIC", "70,030", "Model quality indicator")
+        st.metric("AIC", f"{AIC:4g}", "Model quality indicator")
 
     # ---- Display full statsmodels summary ----
     st.subheader("Detailed Coefficients Analysis")
@@ -68,15 +79,20 @@ with tab1:
     # ---- Interpretation in plain English ----
     st.markdown("""
     **Key Coefficient Interpretation:**
-    - Baseline: Africa (omitted category) at 31.12 µg/m³
-    - Location Impacts:
-      - ⬇️ Americas & Western Pacific: ~14.7 µg/m³ lower than Africa
-      - ⬇️ Europe: 11.0 µg/m³ lower
-      - ⬆️ Eastern Mediterranean: 3.9 µg/m³ higher
+    - Baseline: Afghanistan (omitted category) at 59.62 µg/m³
+    - Example Location Impacts:
+      - ⬇️ Armenia: 17.28 µg/m³ lower than Africa
+      - ⬇️ Italy: -40.61 µg/m³ lower
+      - ⬆️ Iran: -26.72 µg/m³ higher
     - Settlement Types:
-      - Rural areas: 3.07 µg/m³ lower than baseline
-      - Urban areas: 1.21 µg/m³ lower
-    - All coefficients significant (p < 0.01) except South-East Asia (p = 0.008)
+      - Rural areas: 3.59  µg/m³ lower than baseline
+      - Urban areas: 0.93 µg/m³ lower
+    - Not all Coefficients are significant (p-values < 0.05):
+        Cameroon        0.113844
+        Kuwait          0.819707
+        Qatar           0.756235
+        Saudi Arabia    0.568200
+        Tajikistan      0.396560
     """)
 
 # ======================== TAB 2: Diagnostic Plots ========================

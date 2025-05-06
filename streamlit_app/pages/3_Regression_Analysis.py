@@ -170,18 +170,16 @@ with tab3:
 st.sidebar.header("Model Interpretation")
 st.sidebar.markdown("""
 **Key Insights:**
-1. **Regional Variations Matter Most:**
-   - Americas & Western Pacific have significantly cleaner air
-   - Eastern Mediterranean shows elevated PM2.5 levels
+1. **Location Variations Matter Most:**
+   - Locations in Americas & Western Pacific have significantly cleaner air
+   - Locations in Eastern Mediterranean shows elevated PM2.5 levels
 
 2. **Urban-Rural Gradient:**
    - Rural areas show lower PM2.5 than urban baseline
    - Most settlement types have better air than reference
 
 3. **Model Limitations:**
-   - Explains 30% of variance (R² = 0.301)
-   - Residual autocorrelation (DW = 0.58)
-   - Non-normal residuals (JB p < 0.001)
+   - Cannot make interpretations about regions
 
 **Actionable Insights:**
 - Focus on Eastern Mediterranean for mitigation

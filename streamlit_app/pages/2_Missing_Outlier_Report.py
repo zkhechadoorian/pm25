@@ -1,6 +1,9 @@
 # ======================== Import Required Libraries ========================
 import streamlit as st
 import pandas as pd
+import ssl
+import certifi
+import urllib.request
 
 # Custom functions for loading, cleaning, and visualizing the data
 from scripts.data_loader import load_data
@@ -25,7 +28,15 @@ The analysis focuses on handling missing values, duplicates, and outliers to ens
 # Cache the raw CSV load to avoid reloading on every rerun
 @st.cache_data
 def load_raw_data():
-    return pd.read_csv("../data/raw/WHO_PM25_urban_2022.csv")
+    
+    fileURL = "https://raw.githubusercontent.com/zkhechadoorian/pm25/refs/heads/main/data/raw/WHO_PM25_urban_2022.csv"
+    ssl_context = ssl.create_default_context(cafile=certifi.where())
+    # Fetch the CSV file from the URL
+    with urllib.request.urlopen(fileURL, context=ssl_context) as response:
+        # Read the CSV file into a DataFrame
+        df = pd.read_csv(response)
+
+    return df #pd.read_csv(fileURL)
 
 df = load_raw_data()
 

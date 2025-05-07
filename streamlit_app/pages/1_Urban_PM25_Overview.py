@@ -81,7 +81,7 @@ with tab2:
 
     # Line chart to show trend over time (all years)
     st.subheader("PM2.5 Trends Over Time")
-    trend_df = df.groupby(['Year', 'ParentLocation'])['FactValueNumeric'].mean().reset_index()
+    trend_df = df.groupby(['Period', 'ParentLocation'])['FactValueNumeric'].mean().reset_index()
     st.plotly_chart(
         create_trend_plot(trend_df, x_column="Year"),  # Specify Year as x-axis
         use_container_width=True
@@ -95,7 +95,7 @@ with tab3:
     def show_data_table(df):
         return st.dataframe(
             df[[
-                'Location', 'ParentLocation', 'Year', 
+                'Location', 'ParentLocation', 'Period', 
                 'FactValueNumeric', 'Dim1'
             ]].rename(columns={
                 'Location': 'City',

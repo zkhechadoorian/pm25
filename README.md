@@ -130,9 +130,9 @@ Navigate to `http://localhost:8501` in your browser.
 Below are some screenshots of the app! 
 
 
-![Animation Screenshot](assets/animation.png)
-![Regional Overview (Europe)](assets/europePM25.png)
-![Regression Analysis](assets/regression.png)
+![Animation Screenshot](assets/animation.jpg)
+![Regional Overview (Europe)](assets/europePM25.jpg)
+![Regression Analysis](assets/regression.jpg)
 
 4. File Structure:
 ```

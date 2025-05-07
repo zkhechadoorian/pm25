@@ -106,6 +106,8 @@ pip list
 
 ### 📊 Part 2: Interactive Dashboard (For General Users)
 
+To view the app in your own browser, click this [link](https://zkhechadoorian-pm25-streamlit-apphome-59cprf.streamlit.app). Alternatively, you can follow the steps below to launch the app locally. 
+
 1. Launch the Streamlit App:
 ```bash
 cd streamlit_app 

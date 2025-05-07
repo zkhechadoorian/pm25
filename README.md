@@ -122,6 +122,15 @@ Navigate to `http://localhost:8501` in your browser.
 - 🌍 Urban PM25 Overview: Interactive global maps and time series trends
 - 🧼 Missing Outlier Report: Visual reports of missing values and outliers
 - 📈 Regression Analysis: Anomaly detection and predictive insights
+- Global PM25 Overview: GIF choropleth of average PM25 levels over the years
+- Average PM25 By Region: average PM25 levels over time for each country in a given region
+
+Below are some screenshots of the app! 
+
+
+![Animation Screenshot](assets/animation.png)
+![Regional Overview (Europe)](assets/europePM25.png)
+![Regression Analysis](assets/regression.png)
 
 4. File Structure:
 ```

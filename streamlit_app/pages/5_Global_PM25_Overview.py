@@ -13,7 +13,7 @@ from scripts.visualizations import (                     # Custom Plotly-based v
 from scripts.stats import calculate_metrics              # Function to calculate summary metrics
 
 # ======================== Streamlit Page Setup ========================
-st.set_page_config(page_title="Urban PM2.5 Overview", layout="wide")
+st.set_page_config(page_title="Global PM2.5 Overview", layout="wide")
 st.title("🌆 Urban PM2.5 Air Quality Overview")  # Dashboard title
 
 # ========================= Load Data ==========================

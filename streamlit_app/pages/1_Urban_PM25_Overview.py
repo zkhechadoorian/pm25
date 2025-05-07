@@ -18,7 +18,7 @@ st.title("🌆 Urban PM2.5 Air Quality Overview")  # Dashboard title
 
 # ========================= Load Data ==========================
 df = load_data()                     # Load the cleaned and structured dataset
-latest_year = df['Year'].max()      # Get the most recent year for default filter
+latest_year = df['Period'].max()      # Get the most recent year for default filter
 
 # ========================= Sidebar Filters ==========================
 st.sidebar.header("Filters")
@@ -26,8 +26,8 @@ st.sidebar.header("Filters")
 # Year slider for selecting a specific year
 selected_year = st.sidebar.slider(
     "Select Year",
-    min_value=int(df['Year'].min()),
-    max_value=int(df['Year'].max()),
+    min_value=int(df['Period'].min()),
+    max_value=int(df['Period'].max()),
     value=int(latest_year)
 )
 
@@ -41,7 +41,7 @@ selected_regions = st.sidebar.multiselect(
 # ========================= Apply Filters ==========================
 # Filter data based on year and selected regions
 filtered_df = df[
-    (df['Year'] == selected_year) &
+    (df['Period'] == selected_year) &
     (df['ParentLocation'].isin(selected_regions))
 ]
 
